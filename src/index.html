@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <link href="https://cdn.botframework.com/botframework-webchat/latest/botchat.css" rel="stylesheet" />
+    </head>
+    
+    <body>
+        <div id="inputDetails">User name:
+            <input type="text" id="uName" value="christian jacka">
+            <br>User Id:
+            <input type="text" id="uId" style="margin-left: 29px;" value="christian.jacka@boehringer-ingelheim.com">
+            <br>
+            <input type="button" value="Submit" onclick="postMessage()">
+        </div>
+        <div id="bot" />
+        <script src="https://cdn.botframework.com/botframework-webchat/latest/botchat.js"></script>
+        <script>
+            function postMessage(){
+                   
+                   var userName = document.getElementById("uName").value;
+                    var userId = document.getElementById("uId").value;
+                    var user = {
+                        id: userId,
+                        name: userName
+                    };
+                  if (userName != "" && userId != "") {
+                         document.getElementById("inputDetails").style.display = "none";
+                        var botConnection = new BotChat.DirectLine({
+                            token: 'RR9yNdaHvMg.cwA.sk8.SYjle90FwOHePIAu6CPgKwDZt4b6czhjFvZtdhvFC04',
+                            user: user
+                        })
+                        
+                        //  var botConnection = new BotChat.DirectLine({
+                        //     token: '',
+                        //     user: user
+                        // })
+        
+        
+                        console.log("User Details ", user);
+        
+                        BotChat.App({
+                            botConnection: botConnection,
+                            user: user,
+                            bot: { id: 'htmlInlineBot02' },
+                            resize: 'detect'
+                        }, document.getElementById("bot"));
+        
+        
+                        botConnection
+                            .postActivity({
+                                from: user,
+                                name: 'requestWelcomeDialog',
+                                type: 'event',
+                                value: ''
+                            })
+                            .subscribe(function (id) {
+                                console.log('"trigger requestWelcomeDialog" sent', id);
+                            });
+                    }
+                    else {
+                        alert("Please Enter Your Details.");
+                       }
+        
+              }
+              /*
+              var user = {
+                    id: 'christian.jacka@boehringer-ingelheim.com',
+                    name: 'christian jacka'
+                };
+              
+                var botConnection = new BotChat.DirectLine({
+                    token: 'FgJKSMvnw6E.cwA.5Sg.yU5adcMgRRfmi9wYfeEiPgt_vR3mIjBRSoZFl_6FbGE',
+                    user: user
+                })
+              
+              BotChat.App({
+                botConnection: botConnection,
+                user: user,
+                bot: { id: 'htmlInlineBot02' },
+                resize: 'detect'
+              }, document.getElementById("bot"));
+              
+              
+              botConnection
+                    .postActivity({
+                        from: user,
+                        name: 'requestWelcomeDialog',
+                        type: 'event',
+                        value: ''
+                    })
+                    .subscribe(function (id) {
+                        console.log('"trigger requestWelcomeDialog" sent');
+                    });
+              */
+        </script>
+    </body>
+
+</html>
