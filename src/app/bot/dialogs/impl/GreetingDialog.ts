@@ -19,6 +19,7 @@ export class GreetingDialog {
             async(session: Session, args) => {
                 console.log("in greetings");
                 GreetingDialog.logger.info("inside greeting dlg :", session.privateConversationData.userDetails);
+		GreetingDialog.logger.info("checking the greeting change in Github :");
                 if(PorpertiesUtil.translationSupport(session.privateConversationData.preferredLanguage)) {
                     session.message.text = session.privateConversationData.translationBeforeMessage;
                 }
